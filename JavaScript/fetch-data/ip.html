@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP</title>
+</head>
+<body>
+    <h2>Your IP address is below</h2>
+
+    <p id="ip"></p>
+
+
+
+    <script>
+
+        const url = "https://api.ipify.org/?format=json";
+
+        async function fetchIP(url){
+
+            const response = await fetch(url);
+            const data = await response.json();
+
+
+            const yourIP = document.querySelector('#ip');
+
+            yourIP.innerHTML = data.ip;
+
+        }
+        fetchIP(url);
+
+
+    </script>
+
+</body>
+</html>
