@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog and Cat</title>
+</head>
+<body>
+
+    <h2>Random Cat Facts</h2>
+    <p id="cat-facts"></p>
+    <button id="next">Next one</button>
+
+
+    <script>
+        const catURL = "https://catfact.ninja/fact";
+
+        const nextBtn = document.getElementById("next");
+        const catFact = document.getElementById("cat-facts");
+
+        async function fetchCatFacts(){
+            const response = await fetch(catURL);
+            const data = await response.json();
+
+            catFact.textContent = data.fact;
+        }
+
+        // call the function when the page load
+        document.
+
+
+        nextBtn.addEventListener("click", fetchCatFacts);
+
+    </script>
+</body>
+</html>
