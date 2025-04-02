@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Data</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <h2>United States Population</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Year</th>
+                <th>Population</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+
+    <script>
+        const url = "https://datausa.io/api/data?drilldowns=Nation&measures=Population";
+
+        async function fetchData(url){
+
+            const response = await fetch(url);
+            const data = await response.json();
+
+            const tableBody = document.getElementById("tableBody");
+            const populationData = data.data; // array
+
+            let total = 0;
+            let count = populationData.length;
+
+            populationData.forEach(year => {
+                total += year.Population;
+
+                const row = document.createElement('tr');
+
+                row.innerHTML = `
+                    <td>${year.Year}</td>
+                    <td>${year.Population}</td>
+                `
+
+                tableBody.appendChild(row);
+            })
+
+
+            const average = parseInt(total / count);
+            const avgRow = document.createElement('tr');
+            avgRow.innerHTML = `
+                <td>Average</td>
+                <td>${average}</td>
+            `
+            tableBody.appendChild(avgRow)
+        }   
+
+        fetchData(url);
+
+    </script>
+</body>
+</html>
