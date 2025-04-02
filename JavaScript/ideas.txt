@@ -1,1 +1,15 @@
 html selection, generate based on 
+
+
+
+closure
+
+
+nested callback
+
+
+setTimeout
+
+
+
+emitter
