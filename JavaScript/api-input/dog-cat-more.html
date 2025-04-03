@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog and Cat</title>
+</head>
+<body>
+
+    <h2>Random Cat Fact</h2>
+    <p id="cat-facts"></p>
+    <button id="next-cat">Next cat fact</button><br>
+
+    <h2>Random Dog Image</h2>
+    <img src="" alt="" height="200" id="dog-image"><br>
+    <button id="next-dog">Next dog image</button>
+
+    <h2>(G)I-dle</h2>
+    <img src="" alt="" height="200" id="gidle-image"><br>
+    <button id="next-gidle">Next team member</button>
+
+    
+    <script>
+        const catURL = "https://catfact.ninja/fact";
+        const dogURL = "https://dog.ceo/api/breeds/image/random";
+
+        // cat fact and dog image
+        const nextCatBtn = document.getElementById("next-cat");
+        const catFact = document.getElementById("cat-facts");
+        const nextDogBtn = document.getElementById("next-dog");
+        const dogImg = document.getElementById("dog-image");
+
+        const nextGidle = document.getElementById("next-gidle");
+        const gidleImg = document.getElementById("gidle-image");
+
+        async function fetchCatFacts(){
+            const response = await fetch(catURL);
+            const data = await response.json();
+
+            catFact.textContent = data.fact;
+        }
+
+
+        async function fetchDogImg(){
+            const response = await fetch(dogURL);
+            const data = await response.json();
+
+            dogImg.src = data.message;
+            dogImg.alt = "Random dog image";
+        }
+
+
+        function fetchIdle(){
+            let random = Math.floor(Math.random() * 2801);
+
+            gidleImg.src = `https://woodylinwc.github.io/Image-Storage/GIDLE/image_${random}.JPG`
+            gidleImg.alt = "Gidle image"
+
+        }
+
+
+
+        // call the function when the page load, using anonymous function
+        document.addEventListener("DOMContentLoaded", function(){
+            fetchCatFacts();
+            fetchDogImg();
+            fetchIdle();
+        });
+        // or pass as a callback 
+        // function loadContents(){
+        //     fetchCatFacts();
+        //     fetchDogImg();
+        // }
+
+
+        // click event, passing callback
+        nextCatBtn.addEventListener("click", fetchCatFacts);
+        nextDogBtn.addEventListener("click", fetchDogImg);
+        nextGidle.addEventListener("click", fetchIdle);
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>
