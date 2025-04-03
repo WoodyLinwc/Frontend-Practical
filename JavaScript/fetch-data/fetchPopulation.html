@@ -22,7 +22,7 @@
     <script>
         const url = "https://datausa.io/api/data?drilldowns=Nation&measures=Population";
 
-        async function fetchData(url){
+        async function fetchData(){
 
             const response = await fetch(url);
             const data = await response.json();
@@ -56,7 +56,8 @@
             tableBody.appendChild(avgRow)
         }   
 
-        fetchData(url);
+        // call the function when reload
+        document.addEventListener("DOMContentLoaded", fetchData)
 
     </script>
 </body>
