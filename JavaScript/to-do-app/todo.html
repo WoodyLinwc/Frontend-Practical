@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do list</title>
+</head>
+<body>
+    <h2>Todo list</h2>
+    <input type="text" id="todoInput" placeholder="Enter a new task...">
+    <button id="addBtn">Add</button>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Status</th>
+                <th>Task</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="todoBody"></tbody>
+    </table>
+
+
+    <script>
+        let todos = [];
+
+        // add todo task
+        function addTodo(){
+            const input = document.getElementById('todoInput');
+            const text = input.value.trim();
+
+            if(text !== ''){
+                todos.push({text, completed: false});
+                input.value = '';
+                renderTodos();
+            }
+        }
+
+        // toggle complete
+        function toggleComplete(index){
+            todos[index].completed = !todos[index].completed;
+            renderTodos();
+        }
+
+        // delete
+        function deleteTodo(index){
+            // delete 1 element at index
+            todos.splice(index, 1);
+            renderTodos();
+        }
+
+        // edit 
+        function editTodo(index){
+            const newText = prompt('Edit todo:', todos[index].text);
+            if(newText !== null){
+                todos[index].text = newText.trim();
+                renderTodos();
+            }
+        }
+
+        function renderTodos(){
+            const tbody = document.getElementById('todoBody');
+            tbody.innerHTML = '';
+
+            todos.forEach((todo, index) => {
+                const tr = document.createElement('tr');
+
+                // status cell
+                const statusCell = document.createElement('td');
+                statusCell.textContent = todo.completed ? 'Y' : '';
+
+                // task cell
+                const taskCell = document.createElement('td');
+                taskCell.textContent = todo.text;
+                if(todo.completed){
+                    taskCell.style.textDecoration = 'line-through';
+                }
+                taskCell.addEventListener('click', () => toggleComplete(index));
+
+                // action cell
+                const actionsCell = document.createElement('td');
+
+                const editBtn = document.createElement('button');
+                editBtn.textContent = 'Edit';
+                editBtn.addEventListener('click', () => editTodo(index));
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'Delete';
+                deleteBtn.addEventListener('click', () => deleteTodo(index));
+
+                actionsCell.appendChild(editBtn);
+                actionsCell.appendChild(document.createTextNode(' '));
+                actionsCell.appendChild(deleteBtn);
+
+                tr.appendChild(statusCell);
+                tr.appendChild(taskCell);
+                tr.appendChild(actionsCell);
+                tbody.appendChild(tr);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('addBtn').addEventListener('click', addTodo);
+            document.getElementById('todoInput').addEventListener('keypress', (e) => {
+                if(e.key === 'Enter'){
+                    addTodo();
+                }
+            });
+            renderTodos();
+        })
+
+
+    </script>
+
+    
+</body>
+</html>
