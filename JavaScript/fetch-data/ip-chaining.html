@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP</title>
+</head>
+<body>
+    <h2>Your IP address is below</h2>
+
+    <p id="ip"></p>
+
+    <h2>Below are some information about your IP</h2>
+
+    <p id="info"></p>
+
+
+
+    <script>
+
+        const url = "https://api.ipify.org/?format=json";
+
+        async function fetchIP(url){
+
+            const response = await fetch(url);
+            const data = await response.json();
+
+
+            const yourIP = document.querySelector('#ip');
+
+            yourIP.innerHTML = data.ip;
+
+        }
+        fetchIP(url);
+
+
+        function fetchIPInfo(url){
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // const yourIP = document.querySelector('#ip');
+                    // yourIP.innerHTML = data.ip;
+
+                    // Use the IP address for a second API call
+                    const infoUrl = `https://ipinfo.io/${data.ip}/geo`;
+                    return fetch(infoUrl);
+                })
+                .then(response => response.json())
+                .then(geoData =>{
+                    // const geoInfo = document.querySelector('#info');
+                    // geoInfo.innerHTML = `Location ${geoData.city}, ${geoData.region}`;
+                    const postalUrl = `https://api.zippopotam.us/us/${geoData.postal}`;
+                    return fetch(postalUrl);
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const place = data.places[0]["place name"];
+                    const postal = document.querySelector('#info');
+                    postal.innerHTML = `You lived in ${place} in ${data.places[0]["state"]} with longitude and latitude (${data.places[0]["longitude"]},${data.places[0]["latitude"]}) roughly!`
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        }
+
+
+        fetchIPInfo(url);
+
+
+    </script>
+
+</body>
+</html>
