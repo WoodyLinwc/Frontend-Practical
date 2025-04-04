@@ -54,3 +54,19 @@ function flattenObject(obj, prefix='', result={}){
     return result;
 }
 console.log(flattenObject(nestedObject));
+
+
+
+// 3. Flatten Array of Nested Object
+const arrayObject = [
+    {name: "Woody", Age: 21},
+    {name: "Lin", Age: 24}
+]
+
+function flattenArrayObject(arr){
+    return arr.reduce((acc,val) => {
+        acc[val.name] = val.Age;
+        return acc;
+    }, {})
+}
+console.log(flattenArrayObject(arrayObject));
