@@ -16,14 +16,14 @@ function createCounter() {
     let count = 0;
 
     return {
-        getCount: function(){
+        getCount(){
             return count;
         },
-        increment: function(){
+        increment(){
             count++;
             return count;
         },
-        reset: function(){
+        reset(){
             count = 0;
             return count;
         }
