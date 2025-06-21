@@ -1,0 +1,7 @@
+fetch data from API
+
+flatMap, Map + flat(1)
+
+using Set to get all unique mealType
+
+using object to assign unique mealType with corresponding meal name
