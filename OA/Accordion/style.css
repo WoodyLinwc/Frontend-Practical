@@ -1,0 +1,8 @@
+.accordion-border {
+    border: 1px black solid;
+    width: 500px;
+}
+
+.accordion-item {
+    border-bottom: 1px solid #ccc;
+}
