@@ -1,6 +1,6 @@
 const url = "https://dummyjson.com/recipes";
 
-const allNames = [];
+let allNames = [];
 
 const fetchData = async (url) => {
     const response = await fetch(url);
