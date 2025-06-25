@@ -19,17 +19,6 @@ const displayResults = (filteredNames) => {
     // join('') make array to a big string
     const resultsList = filteredNames.map((name) => `<p>${name}</p>`).join("");
     results.innerHTML = resultsList;
-
-    // add click event listener to each result
-    const resultOutputs = results.querySelector("p");
-    // loop the NodeList
-    resultOutputs.forEach("click", (e) => {
-        if (e.target.tagName === "p") {
-            const searchInput = document.getElementById("searchInput");
-            searchInput.value = e.target.textContext;
-            results.innerHTML = "";
-        }
-    });
 };
 
 const filterMeals = (searchTerm) => {
@@ -54,6 +43,15 @@ const init = async () => {
         const searchInput = document.getElementById("searchInput");
         searchInput.addEventListener("input", (e) => {
             filterMeals(e.target.value);
+        });
+
+        // event delegation: one click listener for all results
+        const results = document.getElementById("results");
+        results.addEventListener("click", (e) => {
+            if (e.target.tagName === "P") {
+                searchInput.value = e.target.textContent;
+                results.innerHTML = "";
+            }
         });
     } catch (error) {
         console.error(error);
