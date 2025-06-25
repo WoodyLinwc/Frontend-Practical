@@ -45,9 +45,23 @@ const init = async () => {
             filterMeals(e.target.value);
         });
 
+        // event listener for Enter key support
+        searchInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                const searchTerm = searchInput.value.trim();
+                if (searchTerm !== "") {
+                    console.log("Searching for:", searchTerm);
+                    document.getElementById(
+                        "results"
+                    ).innerHTML = `<p>Searching for ${searchTerm}</p>`;
+                }
+            }
+        });
+
         // event delegation: one click listener for all results
         const results = document.getElementById("results");
         results.addEventListener("click", (e) => {
+            // HTML tag names are always returned in UPPERCASE
             if (e.target.tagName === "P") {
                 searchInput.value = e.target.textContent;
                 results.innerHTML = "";
