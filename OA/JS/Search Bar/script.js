@@ -18,8 +18,18 @@ const displayResults = (filteredNames) => {
 
     // join('') make array to a big string
     const resultsList = filteredNames.map((name) => `<p>${name}</p>`).join("");
-
     results.innerHTML = resultsList;
+
+    // add click event listener to each result
+    const resultOutputs = results.querySelector("p");
+    // loop the NodeList
+    resultOutputs.forEach("click", (e) => {
+        if (e.target.tagName === "p") {
+            const searchInput = document.getElementById("searchInput");
+            searchInput.value = e.target.textContext;
+            results.innerHTML = "";
+        }
+    });
 };
 
 const filterMeals = (searchTerm) => {
