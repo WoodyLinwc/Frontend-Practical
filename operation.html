@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>JavaScript Operations Reference Guide</title>
+        <style>
+            body {
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                line-height: 1.6;
+                margin: 0;
+                padding: 20px;
+                background-color: #f8f9fa;
+                color: #333;
+            }
+
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                background: white;
+                padding: 40px;
+                border-radius: 10px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            h1 {
+                color: #2c3e50;
+                text-align: center;
+                border-bottom: 3px solid #3498db;
+                padding-bottom: 10px;
+                margin-bottom: 30px;
+            }
+
+            h2 {
+                color: #34495e;
+                border-left: 4px solid #3498db;
+                padding-left: 15px;
+                margin-top: 30px;
+                margin-bottom: 15px;
+            }
+
+            h3 {
+                color: #2c3e50;
+                margin-top: 25px;
+                margin-bottom: 10px;
+            }
+
+            pre {
+                background-color: #f8f9fa;
+                border: 1px solid #e9ecef;
+                border-radius: 5px;
+                padding: 15px;
+                overflow-x: auto;
+                font-family: "Courier New", monospace;
+                font-size: 13px;
+                line-height: 1.4;
+                margin: 10px 0;
+            }
+
+            code {
+                background-color: #f1f3f4;
+                padding: 2px 4px;
+                border-radius: 3px;
+                font-family: "Courier New", monospace;
+                font-size: 13px;
+            }
+
+            .print-button {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background-color: #3498db;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 14px;
+                z-index: 1000;
+            }
+
+            .print-button:hover {
+                background-color: #2980b9;
+            }
+
+            @media print {
+                body {
+                    background-color: white;
+                    padding: 0;
+                }
+
+                .container {
+                    box-shadow: none;
+                    padding: 20px;
+                }
+
+                .print-button {
+                    display: none;
+                }
+
+                h2 {
+                    page-break-before: auto;
+                }
+            }
+
+            .toc {
+                background-color: #f8f9fa;
+                padding: 20px;
+                border-radius: 5px;
+                margin-bottom: 30px;
+            }
+
+            .toc h3 {
+                margin-top: 0;
+                color: #2c3e50;
+            }
+
+            .toc ul {
+                list-style-type: none;
+                padding-left: 0;
+            }
+
+            .toc li {
+                margin: 5px 0;
+            }
+
+            .toc a {
+                color: #3498db;
+                text-decoration: none;
+            }
+
+            .toc a:hover {
+                text-decoration: underline;
+            }
+        </style>
+    </head>
+    <body>
+        <button class="print-button" onclick="handlePrint()">
+            Print / Save as PDF
+        </button>
+
+        <div class="container">
+            <h1>JavaScript Operations Reference Guide</h1>
+
+            <div class="toc">
+                <h3>Table of Contents</h3>
+                <ul>
+                    <li><a href="#array-operations">Array Operations</a></li>
+                    <li><a href="#object-operations">Object Operations</a></li>
+                    <li><a href="#string-operations">String Operations</a></li>
+                    <li><a href="#number-operations">Number Operations</a></li>
+                    <li><a href="#date-operations">Date Operations</a></li>
+                    <li><a href="#set-operations">Set Operations</a></li>
+                    <li><a href="#map-operations">Map Operations</a></li>
+                    <li><a href="#regexp-operations">RegExp Operations</a></li>
+                    <li><a href="#error-handling">Error Handling</a></li>
+                    <li><a href="#async-operations">Async Operations</a></li>
+                    <li><a href="#destructuring">Destructuring</a></li>
+                    <li><a href="#type-conversion">Type Conversion</a></li>
+                    <li><a href="#utility-functions">Utility Functions</a></li>
+                </ul>
+            </div>
+
+            <script>
+                function handlePrint() {
+                    // Try multiple approaches for PDF generation
+                    if (window.print) {
+                        window.print();
+                    } else {
+                        // Fallback: show instructions
+                        alert(
+                            'To save as PDF:\n\n1. Press Ctrl+P (or Cmd+P on Mac)\n2. Choose "Save as PDF" or "Microsoft Print to PDF"\n3. Click Save\n\nAlternatively, right-click anywhere on the page and select "Print"'
+                        );
+                    }
+                }
+
+                // Alternative: Add keyboard shortcut
+                document.addEventListener("keydown", function (e) {
+                    if ((e.ctrlKey || e.metaKey) && e.key === "p") {
+                        e.preventDefault();
+                        handlePrint();
+                    }
+                });
+
+                // Show instructions on page load
+                window.addEventListener("load", function () {
+                    const instructionDiv = document.createElement("div");
+                    instructionDiv.style.cssText = `
+                position: fixed;
+                top: 70px;
+                right: 20px;
+                background: #fff3cd;
+                border: 1px solid #ffeaa7;
+                border-radius: 5px;
+                padding: 10px;
+                font-size: 12px;
+                max-width: 250px;
+                z-index: 999;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            `;
+                    instructionDiv.innerHTML = `
+                <strong>💡 To save as PDF:</strong><br>
+                • Click the blue button above, or<br>
+                • Press Ctrl+P (Cmd+P on Mac)<br>
+                • Select "Save as PDF"<br>
+                <button onclick="this.parentElement.remove()" style="float: right; background: none; border: none; cursor: pointer;">✕</button>
+            `;
+                    document.body.appendChild(instructionDiv);
+
+                    // Auto-hide after 10 seconds
+                    setTimeout(() => {
+                        if (instructionDiv.parentElement) {
+                            instructionDiv.remove();
+                        }
+                    }, 10000);
+                });
+            </script>
+
+            <h2 id="array-operations">Array Operations</h2>
+
+            <h3>Creation and Basic Operations</h3>
+            <pre><code>// Creating arrays
+const arr1 = [1, 2, 3];
+const arr2 = new Array(3);          // [empty × 3]
+const arr3 = Array.of(1, 2, 3);     // [1, 2, 3]
+const arr4 = Array.from({length: 3}, (_, i) => i); // [0, 1, 2]
+
+// Adding/removing elements
+arr.push(4);           // add to end, returns new length
+arr.pop();             // remove from end, returns removed element
+arr.unshift(0);        // add to beginning, returns new length
+arr.shift();           // remove from beginning, returns removed element
+arr.splice(1, 1, 'new'); // remove 1 element at index 1, insert 'new'</code></pre>
+
+            <h3>Array Searching and Checking</h3>
+            <pre><code>const arr = [1, 2, 3, 4, 5];
+arr.indexOf(3);        // 2 (first occurrence)
+arr.lastIndexOf(3);    // 2 (last occurrence)
+arr.includes(3);       // true
+arr.find(x => x > 3);  // 4 (first match)
+arr.findIndex(x => x > 3); // 3 (index of first match)
+arr.some(x => x > 4);  // true (at least one matches)
+arr.every(x => x > 0); // true (all match)</code></pre>
+
+            <h3>Array Transformation</h3>
+            <pre><code>const arr = [1, 2, 3, 4, 5];
+arr.map(x => x * 2);                    // [2, 4, 6, 8, 10]
+arr.filter(x => x > 2);                 // [3, 4, 5]
+arr.reduce((sum, x) => sum + x, 0);     // 15
+arr.reduceRight((sum, x) => sum + x, 0); // 15 (right to left)
+arr.flatMap(x => [x, x * 2]);          // [1, 2, 2, 4, 3, 6, 4, 8, 5, 10]</code></pre>
+
+            <h3>Array Sorting and Reversing</h3>
+            <pre><code>const arr = [3, 1, 4, 1, 5];
+arr.sort();                    // [1, 1, 3, 4, 5] (mutates original)
+arr.sort((a, b) => b - a);     // [5, 4, 3, 1, 1] (descending)
+arr.reverse();                 // [5, 1, 4, 1, 3] (mutates original)
+[...arr].sort();               // non-mutating sort</code></pre>
+
+            <h3>Array Slicing and Joining</h3>
+            <pre><code>const arr = [1, 2, 3, 4, 5];
+arr.slice(1, 3);       // [2, 3] (from index 1 to 3, exclusive)
+arr.slice(-2);         // [4, 5] (last 2 elements)
+arr.join('-');         // "1-2-3-4-5"
+arr.concat([6, 7]);    // [1, 2, 3, 4, 5, 6, 7]</code></pre>
+
+            <h3>Array Flattening and Copying</h3>
+            <pre><code>// Flattening arrays
+const nested = [1, [2, 3], [4, [5, 6]]];
+const flat1 = nested.flat();        // [1, 2, 3, 4, [5, 6]] - one level
+const flatAll = nested.flat(Infinity); // [1, 2, 3, 4, 5, 6] - all levels
+
+// Shallow copying arrays
+const arr = [1, 2, 3];
+const copy1 = [...arr];           // spread operator
+const copy2 = Array.from(arr);    // Array.from()
+const copy3 = arr.slice();        // slice()
+
+// Converting array to Set (removes duplicates)
+const arr = [1, 2, 2, 3, 3, 4];
+const uniqueSet = new Set(arr);        // Set {1, 2, 3, 4}
+const uniqueArray = [...new Set(arr)]; // [1, 2, 3, 4]</code></pre>
+
+            <h2 id="object-operations">Object Operations</h2>
+
+            <h3>Object Creation</h3>
+            <pre><code>const obj1 = {a: 1, b: 2};
+const obj2 = new Object();
+const obj3 = Object.create(null);           // no prototype
+const obj4 = Object.create(obj1);           // inherits from obj1
+const obj5 = Object.fromEntries([['a', 1], ['b', 2]]); // from entries</code></pre>
+
+            <h3>Object Property Operations</h3>
+            <pre><code>const obj = {a: 1, b: 2};
+obj.hasOwnProperty('a');         // true
+'a' in obj;                      // true
+obj.propertyIsEnumerable('a');   // true
+Object.getOwnPropertyNames(obj); // ['a', 'b']
+Object.getOwnPropertyDescriptor(obj, 'a'); // {value: 1, writable: true, ...}</code></pre>
+
+            <h3>Object Manipulation</h3>
+            <pre><code>const obj1 = {a: 1, b: 2};
+const obj2 = {c: 3, d: 4};
+
+// Copying and merging
+const copy = {...obj1};
+const merged = {...obj1, ...obj2};
+const assigned = Object.assign({}, obj1, obj2);
+
+// Freezing and sealing
+Object.freeze(obj);    // prevents all changes
+Object.seal(obj);      // prevents adding/removing properties
+Object.preventExtensions(obj); // prevents adding properties</code></pre>
+
+            <h3>Object Iteration</h3>
+            <pre><code>const obj = {a: 1, b: 2, c: 3};
+
+// Getting object keys/values/entries
+const keys = Object.keys(obj);       // ['a', 'b', 'c']
+const values = Object.values(obj);   // [1, 2, 3]
+const entries = Object.entries(obj); // [['a', 1], ['b', 2], ['c', 3]]
+
+// Iteration methods
+for (const key in obj) { /* iterate keys */ }
+for (const [key, value] of Object.entries(obj)) { /* iterate entries */ }
+Object.keys(obj).forEach(key => { /* iterate keys */ });
+Object.values(obj).forEach(value => { /* iterate values */ });</code></pre>
+
+            <h2 id="string-operations">String Operations</h2>
+
+            <h3>String Creation and Basic Operations</h3>
+            <pre><code>const str1 = "hello";
+const str2 = String(123);
+const str3 = `template ${str1}`;
+const str4 = str1.repeat(3);         // "hellohellohello"
+const str5 = str1.padStart(10, '0'); // "00000hello"
+const str6 = str1.padEnd(10, '!');   // "hello!!!!!"</code></pre>
+
+            <h3>String Searching</h3>
+            <pre><code>const str = "hello world";
+str.indexOf('o');          // 4 (first occurrence)
+str.lastIndexOf('o');      // 7 (last occurrence)
+str.includes('world');     // true
+str.startsWith('hello');   // true
+str.endsWith('world');     // true
+str.search(/w\w+/);        // 6 (regex search)
+str.match(/l/g);           // ['l', 'l', 'l'] (all matches)</code></pre>
+
+            <h3>String Transformation</h3>
+            <pre><code>const str = "  Hello World  ";
+str.trim();                // "Hello World"
+str.trimStart();           // "Hello World  "
+str.trimEnd();             // "  Hello World"
+str.toLowerCase();         // "  hello world  "
+str.toUpperCase();         // "  HELLO WORLD  "
+str.replace('World', 'JS'); // "  Hello JS  "
+str.replaceAll('l', 'L');  // "  HeLLo WorLd  "
+
+// Converting cases
+const str = "Hello World";
+str.toLowerCase();     // "hello world"
+str.toUpperCase();     // "HELLO WORLD"
+str.charAt(0).toUpperCase() + str.slice(1); // "Hello World" (capitalize first)</code></pre>
+
+            <h3>String Splitting and Slicing</h3>
+            <pre><code>const str = "a,b,c,d";
+str.split(',');            // ['a', 'b', 'c', 'd']
+str.split('');             // ['a', ',', 'b', ',', 'c', ',', 'd']
+str.slice(2, 5);           // "b,c"
+str.substring(2, 5);       // "b,c"
+str.substr(2, 3);          // "b,c" (deprecated)
+str.charAt(0);             // "a"
+str.charCodeAt(0);         // 97
+
+// String to array and back
+const str = "hello";
+const arr = str.split('');      // ['h', 'e', 'l', 'l', 'o']
+const back = arr.join('');      // "hello"
+const words = "a b c".split(' '); // ['a', 'b', 'c']</code></pre>
+
+            <h2 id="number-operations">Number Operations</h2>
+
+            <h3>Number Creation and Checking</h3>
+            <pre><code>const num = 42;
+Number.isInteger(42);      // true
+Number.isFinite(42);       // true
+Number.isNaN(NaN);         // true
+Number.isSafeInteger(42);  // true
+Number.parseFloat('3.14'); // 3.14
+Number.parseInt('42px');   // 42</code></pre>
+
+            <h3>Number Formatting</h3>
+            <pre><code>const num = 3.14159;
+num.toFixed(2);            // "3.14"
+num.toPrecision(3);        // "3.14"
+num.toExponential(2);      // "3.14e+0"
+num.toString(16);          // "3.243f6a8885a3" (hex)</code></pre>
+
+            <h3>Math Operations</h3>
+            <pre><code>Math.abs(-5);              // 5
+Math.round(3.7);           // 4
+Math.floor(3.7);           // 3
+Math.ceil(3.2);            // 4
+Math.min(1, 2, 3);         // 1
+Math.max(1, 2, 3);         // 3
+Math.random();             // random number 0-1
+Math.pow(2, 3);            // 8
+Math.sqrt(16);             // 4</code></pre>
+
+            <h2 id="date-operations">Date Operations</h2>
+
+            <h3>Date Creation</h3>
+            <pre><code>const now = new Date();
+const specific = new Date('2023-12-25');
+const fromTimestamp = new Date(1640995200000);
+const fromParts = new Date(2023, 11, 25); // month is 0-indexed</code></pre>
+
+            <h3>Date Methods</h3>
+            <pre><code>const date = new Date();
+date.getTime();            // timestamp
+date.getFullYear();        // 2023
+date.getMonth();           // 11 (0-indexed)
+date.getDate();            // 25
+date.getDay();             // 1 (0=Sunday)
+date.getHours();           // 14
+date.toISOString();        // "2023-12-25T14:30:00.000Z"
+date.toLocaleDateString(); // "12/25/2023"</code></pre>
+
+            <h2 id="set-operations">Set Operations</h2>
+
+            <h3>Set Creation and Methods</h3>
+            <pre><code>const set = new Set([1, 2, 3, 3]); // {1, 2, 3}
+set.add(4);                // add element
+set.has(3);                // true
+set.delete(2);             // remove element
+set.clear();               // remove all
+set.size;                  // number of elements
+Array.from(set);           // convert to array
+[...set];                  // spread to array</code></pre>
+
+            <h3>Set Operations</h3>
+            <pre><code>const set1 = new Set([1, 2, 3]);
+const set2 = new Set([3, 4, 5]);
+
+// Union
+const union = new Set([...set1, ...set2]); // {1, 2, 3, 4, 5}
+
+// Intersection
+const intersection = new Set([...set1].filter(x => set2.has(x))); // {3}
+
+// Difference
+const difference = new Set([...set1].filter(x => !set2.has(x))); // {1, 2}</code></pre>
+
+            <h2 id="map-operations">Map Operations</h2>
+
+            <h3>Map Creation and Methods</h3>
+            <pre><code>const map = new Map();
+map.set('key1', 'value1');
+map.set('key2', 'value2');
+map.get('key1');           // 'value1'
+map.has('key1');           // true
+map.delete('key1');        // remove entry
+map.clear();               // remove all
+map.size;                  // number of entries
+
+// From array of arrays
+const map2 = new Map([['a', 1], ['b', 2]]);</code></pre>
+
+            <h3>Map Iteration</h3>
+            <pre><code>const map = new Map([['a', 1], ['b', 2]]);
+for (const [key, value] of map) { /* iterate entries */ }
+for (const key of map.keys()) { /* iterate keys */ }
+for (const value of map.values()) { /* iterate values */ }
+map.forEach((value, key) => { /* iterate */ });</code></pre>
+
+            <h2 id="regexp-operations">RegExp Operations</h2>
+
+            <h3>RegExp Creation and Methods</h3>
+            <pre><code>const regex1 = /hello/gi;
+const regex2 = new RegExp('hello', 'gi');
+
+const str = "Hello World";
+regex1.test(str);          // true
+regex1.exec(str);          // match object or null
+str.match(regex1);         // array of matches
+str.search(regex1);        // index of first match
+str.replace(regex1, 'hi'); // "hi World"
+str.split(/\s+/);          // split by whitespace</code></pre>
+
+            <h2 id="error-handling">Error Handling</h2>
+
+            <h3>Error Types and Handling</h3>
+            <pre><code>try {
+  throw new Error('Something went wrong');
+} catch (error) {
+  console.log(error.message);
+  console.log(error.stack);
+} finally {
+  // cleanup code
+}
+
+// Error types
+new Error('generic error');
+new TypeError('type error');
+new ReferenceError('reference error');
+new SyntaxError('syntax error');
+new RangeError('range error');</code></pre>
+
+            <h2 id="async-operations">Async Operations</h2>
+
+            <h3>Promises</h3>
+            <pre><code>const promise = new Promise((resolve, reject) => {
+  setTimeout(() => resolve('done'), 1000);
+});
+
+promise.then(result => console.log(result));
+promise.catch(error => console.error(error));
+promise.finally(() => console.log('cleanup'));
+
+// Promise utilities
+Promise.all([promise1, promise2]);     // wait for all
+Promise.allSettled([promise1, promise2]); // wait for all, don't fail fast
+Promise.race([promise1, promise2]);    // first to resolve/reject
+Promise.resolve(value);                // resolved promise
+Promise.reject(error);                 // rejected promise</code></pre>
+
+            <h3>Async/Await</h3>
+            <pre><code>async function fetchData() {
+  try {
+    const result = await fetch('https://api.example.com');
+    return await result.json();
+  } catch (error) {
+    console.error(error);
+  }
+}</code></pre>
+
+            <h2 id="destructuring">Destructuring</h2>
+
+            <h3>Array Destructuring</h3>
+            <pre><code>const arr = [1, 2, 3, 4, 5];
+const [first, second, ...rest] = arr;  // first=1, second=2, rest=[3,4,5]
+const [a, , c] = arr;                  // skip elements
+const [x = 0, y = 0] = [1];            // default values</code></pre>
+
+            <h3>Object Destructuring</h3>
+            <pre><code>const obj = {a: 1, b: 2, c: 3};
+const {a, b} = obj;                    // a=1, b=2
+const {a: x, b: y} = obj;              // rename: x=1, y=2
+const {a, b, d = 4} = obj;             // default values
+const {a, ...rest} = obj;              // rest={b:2, c:3}</code></pre>
+
+            <h2 id="type-conversion">Type Conversion</h2>
+
+            <h3>Type Checking</h3>
+            <pre><code>Array.isArray([1, 2, 3]);        // true
+typeof "hello";                  // "string"
+typeof 42;                       // "number"
+typeof {};                       // "object"
+typeof null;                     // "object" (quirk!)</code></pre>
+
+            <h3>Explicit Conversion</h3>
+            <pre><code>String(123);               // "123"
+Number("456");             // 456
+Boolean(1);                // true
+parseInt("123px");         // 123
+parseFloat("12.34");       // 12.34
+Array.from("hello");       // ['h', 'e', 'l', 'l', 'o']
+Object.keys({a: 1});       // ['a']</code></pre>
+
+            <h3>Implicit Conversion Examples</h3>
+            <pre><code>"5" + 3;                   // "53" (string concatenation)
+"5" - 3;                   // 2 (numeric subtraction)
+"5" * 3;                   // 15 (numeric multiplication)
+!"hello";                  // false (boolean negation)
++true;                     // 1 (numeric conversion)</code></pre>
+
+            <h2 id="utility-functions">Utility Functions</h2>
+
+            <h3>Common Utility Patterns</h3>
+            <pre><code>// Deep clone (simple objects)
+const deepClone = obj => JSON.parse(JSON.stringify(obj));
+
+// Remove duplicates
+const unique = arr => [...new Set(arr)];
+
+// Chunk array
+const chunk = (arr, size) => 
+  Array.from({length: Math.ceil(arr.length / size)}, (_, i) =>
+    arr.slice(i * size, i * size + size)
+  );
+
+// Debounce
+const debounce = (func, delay) => {
+  let timeoutId;
+  return (...args) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func(...args), delay);
+  };
+};
+
+// Throttle
+const throttle = (func, delay) => {
+  let lastCall = 0;
+  return (...args) => {
+    const now = Date.now();
+    if (now - lastCall >= delay) {
+      lastCall = now;
+      func(...args);
+    }
+  };
+};
+
+// Removing Falsy Values
+const arr = [0, 1, false, 2, "", 3, null, undefined, 4];
+const truthy = arr.filter(Boolean); // [1, 2, 3, 4]</code></pre>
+
+            <h3>Working with JSON</h3>
+            <pre><code>const obj = {name: "John", age: 30};
+const json = JSON.stringify(obj);    // '{"name":"John","age":30}'
+const parsed = JSON.parse(json);     // {name: "John", age: 30}</code></pre>
+
+            <div
+                style="
+                    text-align: center;
+                    margin-top: 40px;
+                    padding: 20px;
+                    border-top: 2px solid #e9ecef;
+                "
+            >
+                <p><strong>JavaScript Operations Reference Guide</strong></p>
+                <p>
+                    This comprehensive guide covers fundamental JavaScript
+                    operations for arrays, objects, strings, numbers, dates, and
+                    more.
+                </p>
+            </div>
+        </div>
+    </body>
+</html>
